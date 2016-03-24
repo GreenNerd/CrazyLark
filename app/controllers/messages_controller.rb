@@ -1,15 +1,26 @@
 class MessagesController < ApplicationController
-require 'net/http'
-
 	def new
-		@message = Message.new
+		@message = Message.new	
 	end
 
-	def send
-		url = URI.parse('http://www.rubyinside.com/test.cgi')
-		Net::HTTP.start(url.host, url.port) do |http|
-		req = Net::HTTP::Post.new(url.path)
-		req.set_form_data({ 'name' => 'David', 'age' => '24' })
-		puts http.request(req).body
+	def seccode_match?
+		if @message.seccode == @@note.seccode
+			return true
+		else
+			# respond_to do |format| #something like that.
+				# format.json{ render :json => { error:(status: -1) }}
+			# end
+		end
+	end
+
+	def create
+		@message = Message.new(params[:id])
+		if seccode_match?(@message)
+			respond_to do |format|				#any auth_token return?!!
+				format.json{ render :json => {}}
+			end
+		else
+			#error
+		end
 	end
 end

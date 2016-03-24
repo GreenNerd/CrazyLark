@@ -11,9 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160324073017) do
+ActiveRecord::Schema.define(version: 20160324140055) do
 
   create_table "messages", force: :cascade do |t|
+    t.string   "mobile"
+    t.string   "seccode"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "send_messages", force: :cascade do |t|
     t.string   "mobile"
     t.string   "seccode"
     t.datetime "created_at", null: false
