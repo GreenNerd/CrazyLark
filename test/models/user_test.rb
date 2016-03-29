@@ -3,8 +3,10 @@ require 'test_helper'
 class UserTest < ActiveSupport::TestCase
 
 	def setup
-		@user = User.new( mobile: "15908155455", message: "123456",
-				password: "123456", password_confirmation: "123456" )
+		@user = User.new(mobile: "15908155455",
+				 message: "123456",
+				 password: "123456",
+				 password_confirmation: "123456")
 	end
 
 	test "should be valid" do 
