@@ -11,7 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160324140055) do
+ActiveRecord::Schema.define(version: 20160329020224) do
+
+  create_table "key_validates", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "messages", force: :cascade do |t|
     t.string   "mobile"
@@ -33,6 +38,7 @@ ActiveRecord::Schema.define(version: 20160324140055) do
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
     t.string   "password_digest"
+    t.string   "remember_digest"
   end
 
   add_index "users", ["mobile"], name: "index_users_on_mobile", unique: true
