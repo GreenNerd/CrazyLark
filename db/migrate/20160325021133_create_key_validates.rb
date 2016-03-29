@@ -1,4 +1,4 @@
-digestclass CreateKeyValidates < ActiveRecord::Migration
+class CreateKeyValidates < ActiveRecord::Migration
   def change
      create_table :key_validates do |t|
 
