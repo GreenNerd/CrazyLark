@@ -1,5 +1,6 @@
 class SendMessageController < ApplicationController
 require 'net/http'
+require 'uri'
 	def new
 		@note = SendMessage.new
 	end
@@ -8,15 +9,25 @@ require 'net/http'
 		@note = SendMessage.new(params[:id])
 		if @note.save
 			@note.write_in_random
-			@note.send 
+			send 
 		else
 			respond
 		end
 	end
 
-	#send message to third party API
 	def send
-		#send message through API provided by XX firm
+		apikey = 'd0df698182f7f0bb9736c11d8e31a7b4'
+		mobile = @note.mobile
+		text = @note.seccode
+
+		send_sms_uri = URI.parse('https://sms.yunpian.com/v1/sms/send.json')
+
+		params['apikey'] = apikey
+		params['mobile'] = mobile
+		params['text'] = text
+		
+		response = Net::HTTP.post_form(send_sms_uri,params)
+		print response.body + '\n'
 	end
 
 	def resend
