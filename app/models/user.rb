@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+	before_create :generate_authentication_token
 	attr_accessor :remember_token
 	validates :mobile, presence: true, length: { is: 11 }, numericality: true,
 				uniqueness: true
@@ -13,12 +14,25 @@ class User < ActiveRecord::Base
 		BCrypt::Password.create(string, cost: cost)
 	end
 
-	def User.new_token
-		SecureRandom.urlsafe_base64
+	def generate_authentication_token
+		loop do 
+			self.authentication_token = SecureRandom.base64(64)
+			break if !User.find_by(authentication_token: authentication_token)
+		end
 	end
 
-	def remember
-		self.remember_token = User.new_token
-		update_attribute(:remember_digest,User.digest(remember_token))
+	def reset_auth_token!
+		generate_authentication_token
+		save
 	end
+
+	# def User.new_token
+		# SecureRandom.urlsafe_base64
+	# end
+
+	# def remember
+		# self.remember_token = User.new_token
+		# update_attribute(:remember_digest,User.digest(remember_token))
+	# end
+
 end

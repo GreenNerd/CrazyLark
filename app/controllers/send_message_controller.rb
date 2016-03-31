@@ -9,6 +9,9 @@ require 'uri'
 		@note = SendMessage.new(params[:id])
 		if @note.save
 			@note.write_in_random
+			respond_to do |random|
+				random.json{ render :json=> @note }	
+			end
 			send 
 		else
 			respond
