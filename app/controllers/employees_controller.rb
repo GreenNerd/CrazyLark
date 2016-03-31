@@ -1,14 +1,13 @@
 class EmployeesController < ApplicationController
-	def login
+	def new
 	end
 
 	def create
 		@employee = Employee.new(employee_param)
 		@employee.save
 		respond_to do |format|
-			format.json{ render :json => @employee }
+			format.html{ redirect_to(employees_url) }
 		end
-		redirect_to usermac_portal_path
 	end
 
 	def show
