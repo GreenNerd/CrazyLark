@@ -3,5 +3,5 @@ Rails.application.routes.draw do
 	resources :users
 	resources :sessions
 	resources :employees
-	resources :sendmessages
+	resources :send_messages
 end
