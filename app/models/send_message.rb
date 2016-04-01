@@ -27,11 +27,12 @@ class SendMessage < ActiveRecord::Base
 	def xsend
 		apikey = 'd0df698182f7f0bb9736c11d8e31a7b4'
 		send_sms_uri = URI.parse('https://sms.yunpian.com/v1/sms/send.json')
-
+		params = Hash.new 
 		params['apikey'] = apikey
 		params['mobile'] = mobile
 		params['minute'] = '5'
 		params['code'] = seccode
+		params['text'] = '..WTK'
 		
 		response = Net::HTTP.post_form(send_sms_uri,params)
 		print response.body + '\n'
