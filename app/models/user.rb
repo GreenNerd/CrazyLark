@@ -34,6 +34,7 @@ class User < ActiveRecord::Base
 # self.remember_token = User.new_token
 # update_attribute(:remember_digest,User.digest(remember_token))
 # end
+
   #reset password authentication
   def create_reset_digest
   	self.reset_digest = User.new_token

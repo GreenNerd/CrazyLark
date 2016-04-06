@@ -13,15 +13,15 @@ class Cdkey < ActiveRecord::Base
       break if !Cdkey.find_by(key: key)
     end
   end
+  #use the code in your console.
+  #and these keys below are for admin. 
 
-#<Cdkey id: 7, key: "EkcMhPCBpYEbiUGv", created_at: "2016-04-06 02:30:52", updated_at: "2016-04-06 02:30:52">, 
-#<Cdkey id: 8, key: "ngUNVhnq4KCUmJKE", created_at: "2016-04-06 02:32:28", updated_at: "2016-04-06 02:32:28">, 
-#<Cdkey id: 9, key: "Jsk8g6CDsfyn0xVL", created_at: "2016-04-06 02:32:28", updated_at: "2016-04-06 02:32:28">, 
-#<Cdkey id: 10, key: "iyhwZ318GfERh2C4", created_at: "2016-04-06 02:32:28", updated_at: "2016-04-06 02:32:28">, 
-#<Cdkey id: 11, key: "uDNj1vwX6kQfXZZq", created_at: "2016-04-06 02:32:28", updated_at: "2016-04-06 02:32:28">, 
-#<Cdkey id: 12, key: "8eUR5rmgbvqlzoBN", created_at: "2016-04-06 02:32:28", updated_at: "2016-04-06 02:32:28">, 
-#<Cdkey id: 13, key: "usAWTUuUWsT7sovb", created_at: "2016-04-06 02:32:28", updated_at: "2016-04-06 02:32:28">, 
-#<Cdkey id: 14, key: "DSNjgptzoXhNcmNB", created_at: "2016-04-06 02:32:28", updated_at: "2016-04-06 02:32:28">, 
-#<Cdkey id: 15, key: "xFRsFQIJM0ekqG8G", created_at: "2016-04-06 02:32:28", updated_at: "2016-04-06 02:32:28">, 
-#<Cdkey id: 16, key: "dcGnkig71oRz5E7A", created_at: "2016-04-06 02:32:28", updated_at: "2016-04-06 02:32:28">, 
-end
+#<Cdkey id: 7, key: "EkcMhPCBpYEbiUGv">
+#<Cdkey id: 8, key: "ngUNVhnq4KCUmJKE">
+#<Cdkey id: 9, key: "Jsk8g6CDsfyn0xVL">
+#<Cdkey id: 10, key: "iyhwZ318GfERh2C4">
+#<Cdkey id: 11, key: "uDNj1vwX6kQfXZZq">
+#<Cdkey id: 12, key: "8eUR5rmgbvqlzoBN">
+#<Cdkey id: 13, key: "usAWTUuUWsT7sovb">
+#<Cdkey id: 14, key: "DSNjgptzoXhNcmNB">
+#<Cdkey id: 16, key: "dcGnkig71oRz5E7A">

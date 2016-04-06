@@ -1,5 +1,5 @@
 class MobileValidate < ActiveRecord::Base
-  def not_signed?
+  def signed?
     if User.find_by(mobile: self.mobile)
       true
     else
