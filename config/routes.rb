@@ -6,4 +6,5 @@ Rails.application.routes.draw do
   resources :send_messages
   resources :mobile_validates
   resources :messages
+  resources :key_validates
 end

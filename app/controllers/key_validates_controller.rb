@@ -1,6 +1,6 @@
 class KeyValidatesController < ApplicationController
   def create
-    @keyvali = KeyValidate.new(params[:id])
+    @keyvali = KeyValidate.new(keyvali_params)
     if @keyvali.save
       if @keyvali.buy?
         respond_to do |format|
@@ -17,4 +17,9 @@ class KeyValidatesController < ApplicationController
       end
     end
   end
+
+  private
+    def keyvali_params
+      params.permit(:key)
+    end
 end

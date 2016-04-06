@@ -13,6 +13,7 @@ class Cdkey < ActiveRecord::Base
       break if !Cdkey.find_by(key: key)
     end
   end
+end
   #use the code in your console.
   #and these keys below are for admin. 
 
