@@ -11,7 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160331031918) do
+ActiveRecord::Schema.define(version: 20160406081943) do
+
+  create_table "cdkeys", force: :cascade do |t|
+    t.string   "key"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "employees", force: :cascade do |t|
     t.text     "name"
@@ -30,6 +36,12 @@ ActiveRecord::Schema.define(version: 20160331031918) do
     t.string   "seccode"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "mobile_validates", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "mobile"
   end
 
   create_table "send_messages", force: :cascade do |t|

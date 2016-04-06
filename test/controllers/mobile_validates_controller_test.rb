@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class KeyValidateControllerTest < ActionController::TestCase
+class MobileValidatesControllerTest < ActionController::TestCase
   # test "the truth" do
   #   assert true
   # end
