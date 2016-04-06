@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160406081943) do
+ActiveRecord::Schema.define(version: 20160406090553) do
 
   create_table "cdkeys", force: :cascade do |t|
     t.string   "key"
@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 20160406081943) do
   create_table "key_validates", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "key"
   end
 
   create_table "messages", force: :cascade do |t|
