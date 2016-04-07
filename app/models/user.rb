@@ -3,9 +3,11 @@ class User < ActiveRecord::Base
   attr_accessor :remember_token
   validates :mobile, presence: true, length: { is: 11 }, numericality: true,
                  uniqueness: true
-  validates :password, presence: true, length: { minimum: 6 }
+  validates :password, presence: true, length: { maximum: 6 }
   #			format: { with VALID_PASSWORD_REGEX }
   #VALID_PASSWORD_REGEX = ^[a-zA-Z][a-zA-Z0-9_]{4,15}$
+  validates :key, presence: true, length: { maximum:16 },
+                 uniqueness: true
   has_secure_password
 	
   def User.digest(string)
@@ -41,5 +43,4 @@ class User < ActiveRecord::Base
   	update_attribute(:reset_digest, User.digest(reset_token))
   	update_attribute(:reset_sent_at, Time.zone.now)
   end
-  
 end
