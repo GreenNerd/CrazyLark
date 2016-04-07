@@ -1,15 +1,12 @@
 class UsersController < ApplicationController
-  def new
-    @user = User.new
-  end
 
   def create
     @user = User.new(user_params)
     if @user.save
-      log_in @user 
-      #redirect_to root_url
+      respond_to do |format|
+        format.json{ render :json => @user.id}
+      end
     else
-      render 'new'
     end
   end
 
@@ -30,7 +27,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:mobile, :message, :password,
+    params.require(:user).permit(:mobile, :message, :password, :key,
                                                   :password_confirmation)
   end
   

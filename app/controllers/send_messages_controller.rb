@@ -10,6 +10,7 @@ require 'uri'
         format.json{ render :json => { success: true } }	
       end
       @note.xsend
+      #accept api error.
     else
       respond_to do |error|
       error.json{ render :json => { error: -1 } }
@@ -22,3 +23,4 @@ end
       params.permit(:mobile)
     end
 end
+

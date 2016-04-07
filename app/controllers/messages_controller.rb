@@ -7,10 +7,13 @@ class MessagesController < ApplicationController
         respond_to do |format|		
           format.json{ render :json => { success: true } }
         end
+        #delete the record
+        
       else
         respond_to do |format|
       	    format.json{ render :json => { error:-1 } }
       	  end
+          #delete this record
       end
     else
       respond_to do |format|

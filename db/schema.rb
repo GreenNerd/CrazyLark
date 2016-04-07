@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160406090553) do
+ActiveRecord::Schema.define(version: 20160406142934) do
 
   create_table "cdkeys", force: :cascade do |t|
     t.string   "key"
@@ -45,6 +45,11 @@ ActiveRecord::Schema.define(version: 20160406090553) do
     t.string   "mobile"
   end
 
+  create_table "password_resets", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "send_messages", force: :cascade do |t|
     t.string   "mobile"
     t.string   "seccode"
@@ -60,6 +65,8 @@ ActiveRecord::Schema.define(version: 20160406090553) do
     t.string   "password_digest"
     t.string   "remember_digest"
     t.string   "authentication_token"
+    t.string   "reset_digest"
+    t.datetime "reset_sent_at"
   end
 
   add_index "users", ["mobile"], name: "index_users_on_mobile", unique: true
