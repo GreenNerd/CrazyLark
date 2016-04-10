@@ -1,18 +1,23 @@
 class PasswordResetsController < ApplicationController
-  #user send_message api.
-  def create
-    @user = User.find_by(password_reset_params)
-      if @user.seccode_is_right?
-        @user.
-        @user.
+  before_action :get_user, only: [:edit, :update]
+
+  def update
+    respond_to do |format|
+      if user = User.find_by(mobile: params[:mobile], reset_token: params[:reset_token]) 
+        if user.update(password_reset_params)
+          format.json{ render :json => { success: true } }
+        else
+          format.json{ render :json => { error: -1 } }        
+        end 
       else
-        
+        format.json{ render :json => { error: -2 } }        
       end
+    end
   end
 
   private
     def password_reset_params
-      params.permit(:mobile,:reset_token)
+      params.permit(:mobile,:reset_token,:password,:password_confirmation)
     end
 
     def get_user

@@ -13,8 +13,8 @@ require 'uri'
       #accept api error.
     else
       respond_to do |error|
-      error.json{ render :json => { error: -1 } }
-    end
+        error.json{ render :json => { error: -1 } }
+      end
   end
 end
 

@@ -2,10 +2,10 @@ class SessionsController < ApplicationController
 
   def create
     user = User.find_by(mobile: params[:mobile])
-    if user && user.authenticate(params[:password])
+    if user && user.authenticate(params[:user][:password])
       self.current_user = user
       respond_to do |format|
-        format.json{ render :json => user.authentication_token }
+        format.json{ render :json => { token:user.authentication_token } }
       end	
     else
       respond_to do |format|
@@ -20,6 +20,6 @@ class SessionsController < ApplicationController
 
   # private
     # def create_params
-      # params.require(:user).permit(:mobile, :password)
+      # params.req.permit(:mobile, :password)
     # end
 end

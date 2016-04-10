@@ -1,12 +1,12 @@
 class User < ActiveRecord::Base
   before_create :generate_authentication_token
-  attr_accessor :remember_token
+  before_create :password_reset_token
   validates :mobile, presence: true, length: { is: 11 }, numericality: true,
                  uniqueness: true
-  validates :password, presence: true, length: { maximum: 6 }
+  validates :password, presence: true, length: { in: 6..16 }
   #			format: { with VALID_PASSWORD_REGEX }
   #VALID_PASSWORD_REGEX = ^[a-zA-Z][a-zA-Z0-9_]{4,15}$
-  validates :key, presence: true, length: { maximum:16 },
+  validates :key, presence: true, length: { is: 16 }, if: :right_key,
                  uniqueness: true
   has_secure_password
 	
@@ -32,15 +32,26 @@ class User < ActiveRecord::Base
     SecureRandom.urlsafe_base64
   end
 
-# def remember
-# self.remember_token = User.new_token
-# update_attribute(:remember_digest,User.digest(remember_token))
-# end
-
-  #reset password authentication
-  def create_reset_digest
-  	self.reset_digest = User.new_token
-  	update_attribute(:reset_digest, User.digest(reset_token))
-  	update_attribute(:reset_sent_at, Time.zone.now)
+  def password_reset_token
+    loop do 
+      self.reset_digest = SecureRandom.base64(64)
+      break if !User.find_by(reset_digest: reset_digest)
+    end
   end
+
+  def password_auth_token!
+    password_reset_token
+    save
+  end
+
+
+  private
+    def right_key
+      if Cdkey.find_by(key: key)
+        true
+      else
+        false
+      end
+    end
+
 end

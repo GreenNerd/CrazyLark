@@ -7,5 +7,5 @@ Rails.application.routes.draw do
   resources :mobile_validates, only: [:create]
   resources :messages, only: [:create]
   resources :key_validates, only: [:create]
-  resources :password_reset, only: [:create]
+  resources :password_resets
 end

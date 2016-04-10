@@ -4,9 +4,12 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       respond_to do |format|
-        format.json{ render :json => @user.id}
+        format.json{ render :json => { success: true } }
       end
     else
+      respond_to do |format|
+        format.json{ render :json => { error:-1 } }
+      end  
     end
   end
 
@@ -27,8 +30,8 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:mobile, :message, :password, :key,
-                                                  :password_confirmation)
+    params.permit(:mobile, :password, :key,
+                                          :password_confirmation)
   end
   
 end

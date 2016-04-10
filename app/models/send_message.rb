@@ -1,7 +1,8 @@
 class SendMessage < ActiveRecord::Base
   after_create :write_in_random
 
-  # validates :mobile, presence: true, numericality: true, length: { is:11 }
+  validates :mobile, presence: true, numericality: true, length: { is:11 }
+  #validates :tag, length: { maximum:3 }
   # write in table
   def write_in_random
     self.seccode = SendMessage.random
@@ -25,16 +26,14 @@ class SendMessage < ActiveRecord::Base
   end
 
   def xsend
-    apikey = 'd0df698182f7f0bb9736c11d8e31a7b4'
-    send_sms_uri = URI.parse('https://sms.yunpian.com/v1/sms/send.json')
+    apikey = '76772a12c77fdf0a5c911f1eba238406'
+    send_tpl_sms_uri = URI.parse('https://sms.yunpian.com/v2/sms/tpl_single_send.json')
     params = Hash.new 
     params['apikey'] = apikey
     params['mobile'] = mobile
-    params['minute'] = '5'
-    params['code'] = seccode
-    params['text'] = '..WTK'
-
-    response = Net::HTTP.post_form(send_sms_uri,params)
+    params['tpl_id'] = 1299971
+    params['tpl_value'] = URI::escape('#code#')+'='+URI::escape(seccode)+'&'+URI::escape('#minutes#')+'='+URI::escape('5')
+    response = Net::HTTP.post_form(send_tpl_sms_uri,params)
     print response.body + '\n'
   end
 
@@ -44,11 +43,4 @@ class SendMessage < ActiveRecord::Base
     end
   end
 
-  # def check_expiration
-# 	if seccode_expired?
-# 		#allow to resend.return true
-# 	else
-# 		#forbid resend.
-# 	end
-  # end
 end
