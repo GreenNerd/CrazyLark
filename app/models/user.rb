@@ -1,11 +1,12 @@
 class User < ActiveRecord::Base
   before_create :generate_authentication_token
   before_create :password_reset_token
+
+  belongs_to :corperation
+  
   validates :mobile, presence: true, length: { is: 11 }, numericality: true,
                  uniqueness: true
   validates :password, presence: true, length: { in: 6..16 }
-  #			format: { with VALID_PASSWORD_REGEX }
-  #VALID_PASSWORD_REGEX = ^[a-zA-Z][a-zA-Z0-9_]{4,15}$
   validates :key, presence: true, length: { is: 16 }, if: :right_key,
                  uniqueness: true
   has_secure_password

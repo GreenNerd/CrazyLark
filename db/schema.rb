@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160407070146) do
+ActiveRecord::Schema.define(version: 20160411014834) do
 
   create_table "cdkeys", force: :cascade do |t|
     t.string   "key"
@@ -19,12 +19,30 @@ ActiveRecord::Schema.define(version: 20160407070146) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "employees", force: :cascade do |t|
-    t.text     "name"
-    t.text     "mac"
+  create_table "corperations", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "name"
+    t.string   "mac"
   end
+
+  create_table "departments", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "corperation_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  add_index "departments", ["corperation_id"], name: "index_departments_on_corperation_id"
+
+  create_table "employees", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "department_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "employees", ["department_id"], name: "index_employees_on_department_id"
 
   create_table "key_validates", force: :cascade do |t|
     t.datetime "created_at", null: false

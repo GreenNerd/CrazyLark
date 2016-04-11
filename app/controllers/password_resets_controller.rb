@@ -3,7 +3,7 @@ class PasswordResetsController < ApplicationController
 
   def update
     respond_to do |format|
-      if user = User.find_by(mobile: params[:mobile], reset_token: params[:reset_token]) 
+      if user = User.find_by(mobile: params[:mobile], password_reset_token: params[:reset_token]) 
         if user.update(password_reset_params)
           format.json{ render :json => { success: true } }
         else

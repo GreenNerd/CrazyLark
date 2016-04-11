@@ -28,7 +28,7 @@ class ApplicationController < ActionController::Base
 
   # def unauthenticated!
   #   respond_to do |format|
-  #     format.json{ render :json => { error:-1 } }
+  #     format.json{ render :json => { error: unlogged } }
   #   end
   # end
 
