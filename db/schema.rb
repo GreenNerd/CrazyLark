@@ -11,12 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160411014834) do
+ActiveRecord::Schema.define(version: 20160414080328) do
+
+  create_table "calendars", force: :cascade do |t|
+    t.date     "day"
+    t.boolean  "dayoff"
+    t.boolean  "holiday"
+    t.integer  "corperation_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
 
   create_table "cdkeys", force: :cascade do |t|
     t.string   "key"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "mac"
   end
 
   create_table "corperations", force: :cascade do |t|
@@ -43,6 +53,9 @@ ActiveRecord::Schema.define(version: 20160411014834) do
   end
 
   add_index "employees", ["department_id"], name: "index_employees_on_department_id"
+
+# Could not dump table "get_macs" because of following NoMethodError
+#   undefined method `[]' for nil:NilClass
 
   create_table "key_validates", force: :cascade do |t|
     t.datetime "created_at", null: false

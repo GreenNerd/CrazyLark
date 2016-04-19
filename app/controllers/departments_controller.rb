@@ -5,25 +5,33 @@ class DepartmentsController < ApplicationController
     @department = Department.new.(department_params)
     respond_to do |format|
       if @department.save
-        format.json{ render :json => { Department.all } }
+        format.json{ render :json =>  { success: true } }
       else
         format.json{ render :json => { error: -1 } }
       end
     end
   end
 
+  def index
+    @departments = Department.all
+    # @department.quantity
+    respond_to do |format|  
+      format.json{ render :json =>  @departments  }
+    end
+  end
+
   def show
     @department = Department.find_by(department_params)
     @employees = @department.employees
-    @department.quantity
+    # @department.quantity
     respond_to do |format|
-      format.json{ render :json => { @employees } }
+      format.json{ render :json => @employees  }
     end
   end
 
   def quantity
     respond_to do |format|
-      format.json{ render :json => { self.employees.count } }
+      format.json{ render :json =>  self.employees.count  }
     end
   end
 

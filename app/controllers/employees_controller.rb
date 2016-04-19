@@ -4,7 +4,8 @@ class EmployeesController < ApplicationController
     @corperation = Corperaton.find_by(:mac, params[:mac])
     @departments = corperation.departments
     respond_to do |format|
-    	format.json{ render :json => { @departments } }
+    	format.json{ render :json => @departments }
+    end
   end
 
   def create
@@ -15,15 +16,33 @@ class EmployeesController < ApplicationController
     end
   end
 
+  def index
+    @employees = Employee.all 
+    respond_to do |format|
+      format.json{ render :json => @employees  }
+    end
+  end
+
   def show
   	@employee = Employee.find_by(params[:id])
   	respond_to do |format|
-  	  format.json{ render :json => { @employee } }
+  	  format.json{ render :json => @employee }
   	end
+  end
+
+  def update
+    employee = Employee.find_by(id:params[:id])
+    respond_to do |format|
+      if employee.update(employee_param)
+        format.json{ render :json => { success: true } }
+      else
+        format.json{ render :json => {error: -1} }
+      end
+    end
   end
 
   private
     def  employee_param
-      params.permit(:name, :mac)
+      params.permit(:name, :mac, :department_id)
     end
 end

@@ -3,7 +3,7 @@ class PasswordResetsController < ApplicationController
 
   def update
     respond_to do |format|
-      if user = User.find_by(mobile: params[:mobile], password_reset_token: params[:reset_token]) 
+      if user = User.find_by(mobile: params[:mobile], reset_digest: params[:reset_digest]) 
         if user.update(password_reset_params)
           format.json{ render :json => { success: true } }
         else
@@ -17,7 +17,7 @@ class PasswordResetsController < ApplicationController
 
   private
     def password_reset_params
-      params.permit(:mobile,:reset_token,:password,:password_confirmation)
+      params.permit(:mobile,:reset_digest,:password,:password_confirmation)
     end
 
     def get_user

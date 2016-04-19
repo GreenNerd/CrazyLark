@@ -6,7 +6,7 @@ class MessagesController < ApplicationController
       if @message.save
         if @message.seccode_match?    #if the message seccode is correct
           if @token = @message.get_token
-              format.json{ render :json => { token: @token } }
+              format.json{ render :json =>  @token  }
           else
               format.json{ render :json => { success: true } }
           end
