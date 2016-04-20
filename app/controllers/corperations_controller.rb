@@ -5,6 +5,7 @@ class CorperationsController < ApplicationController
     respond_to do |format|
       if @corperation.save
         @corperation.create_new_days
+        @corperation.create_times
         format.json{ render :json => { success: true } }
       else
         format.json{ render :json => { error: -1 } }

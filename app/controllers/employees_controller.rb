@@ -22,9 +22,13 @@ class EmployeesController < ApplicationController
       format.json{ render :json => @employees  }
     end
   end
+  
+  def edit
+    @employee = Employee.find(params[:id])  
+  end
 
   def show
-  	@employee = Employee.find_by(params[:id])
+  	@employee = Employee.find(params[:id])
   	respond_to do |format|
   	  format.json{ render :json => @employee }
   	end
@@ -39,6 +43,10 @@ class EmployeesController < ApplicationController
         format.json{ render :json => {error: -1} }
       end
     end
+  end
+
+  def destroy
+    Employee.find(params[:id]).destroy
   end
 
   private
