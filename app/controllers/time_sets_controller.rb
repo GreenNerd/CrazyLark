@@ -11,10 +11,6 @@ class TimeSetsController < ApplicationController
     end
   end
 
-  def clock
-    
-  end
-
   private
      def timeset_params
        params.permit(:corperation_id,:start,:arrive,:late,:run,:leave,:finish)

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160414080328) do
+ActiveRecord::Schema.define(version: 20160421021632) do
 
   create_table "calendars", force: :cascade do |t|
     t.date     "day"
@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 20160414080328) do
     t.integer  "department_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.string   "mac"
   end
 
   add_index "employees", ["department_id"], name: "index_employees_on_department_id"
@@ -87,6 +88,20 @@ ActiveRecord::Schema.define(version: 20160414080328) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "time_sets", force: :cascade do |t|
+    t.integer  "corperation_id"
+    t.float    "start"
+    t.float    "arrive"
+    t.float    "late"
+    t.float    "run"
+    t.float    "leave"
+    t.float    "finish"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  add_index "time_sets", ["corperation_id"], name: "index_time_sets_on_corperation_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "mobile"
