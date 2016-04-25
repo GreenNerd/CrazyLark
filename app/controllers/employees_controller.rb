@@ -28,10 +28,12 @@ class EmployeesController < ApplicationController
   end
 
   def show
-  	@employee = Employee.find(params[:id])
-  	respond_to do |format|
-  	  format.json{ render :json => @employee }
-  	end
+    @employee = Employee.find(params[:id])
+    @department_name = Department.find(@employee.department_id).name
+    respond_to do |format|
+  	  format.json{ render :json => { info: @employee,
+                                                        department_name: @department_name } }
+    end
   end
 
   def update
@@ -49,10 +51,11 @@ class EmployeesController < ApplicationController
     Employee.find(params[:id]).destroy
     respond_to do |format|
       format.json{ render :json => {  } }
+    end
   end
 
   private
     def  employee_param
-      params.permit(:name, :mac, :department_id)
+      params.permit(:id, :mobile, :name, :mac, :department_id)
     end
 end

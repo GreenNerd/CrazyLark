@@ -1,3 +1,4 @@
+
 class GetMac < ActiveRecord::Base
   before_create :clock
 
@@ -6,16 +7,17 @@ class GetMac < ActiveRecord::Base
     id_corperation = find_corperation
     ids_employees = find_employee   
     times = TimeSet.find_by(corperation_id: id_corperation[0])
-
-
-    if coming < times.start * 60
-      
-    elsif coming < times.arrive * 60
-      record_come
-    elsif coming < times.late * 60
-      record_late
-    else coming > times.late * 60
-      record_absence 
+    
+    for i in 0..ids_employees.length - 1
+      if coming < times.start * 60
+        break
+      elsif coming < times.arrive * 60
+        record_come
+      elsif coming < times.late * 60
+        record_late
+      else coming > times.late * 60
+        record_absence 
+      end
     end
   end
 
@@ -31,10 +33,26 @@ class GetMac < ActiveRecord::Base
       goodboys[n] = Employee.where(mac: mac_address).ids
       n++
     end
+    goodboys
+  end
+
+  def create_new_day_record
+    for i in 0..ids_employees.length - 1
+      if Record.where(employee_id: ids_employees[i][0])
+        if Record.where(employee_id: ids_employees[i][0]).last.date != Date.today  
+          Record.create(employee_id: ids_employees[i][0],date: Date.today) 
+        end
+      else
+          Record.create(employee_id: ids_employees[i][0],date: Date.today)
+      end
   end
 
   def record_come
-    
+    if Record.where(employee_id: ids_employees[])
+      
+    else
+      
+    end
   end
 
   def record_late

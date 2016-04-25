@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160421021632) do
+ActiveRecord::Schema.define(version: 20160425092004) do
 
   create_table "calendars", force: :cascade do |t|
     t.date     "day"
@@ -51,6 +51,7 @@ ActiveRecord::Schema.define(version: 20160421021632) do
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.string   "mac"
+    t.string   "mobile"
   end
 
   add_index "employees", ["department_id"], name: "index_employees_on_department_id"
@@ -81,6 +82,16 @@ ActiveRecord::Schema.define(version: 20160421021632) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "records", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.date     "date"
+    t.string   "status"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "records", ["employee_id"], name: "index_records_on_employee_id"
 
   create_table "send_messages", force: :cascade do |t|
     t.string   "mobile"
