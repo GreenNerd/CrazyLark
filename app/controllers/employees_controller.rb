@@ -12,7 +12,7 @@ class EmployeesController < ApplicationController
     @employee = Employee.new(employee_param)
     @employee.save
     respond_to do |format|
-      format.html{ redirect_to(employees_url) }
+      format.json{ render :json => { success: true } }
     end
   end
 
@@ -42,7 +42,7 @@ class EmployeesController < ApplicationController
       if employee.update(employee_param)
         format.json{ render :json => { success: true } }
       else
-        format.json{ render :json => {error: -1} }
+        format.json{ render :json => { error: -1 } }
       end
     end
   end
@@ -50,7 +50,7 @@ class EmployeesController < ApplicationController
   def destroy
     Employee.find(params[:id]).destroy
     respond_to do |format|
-      format.json{ render :json => {  } }
+      format.json{ render :json => { success: true } }
     end
   end
 

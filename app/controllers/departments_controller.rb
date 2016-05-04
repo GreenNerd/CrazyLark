@@ -2,7 +2,7 @@ class DepartmentsController < ApplicationController
   before_action :authenticate_user!, only: [:create]
   # before_action :correct_user, only: [:create,:destroy]
   def create
-    @department = Department.new.(department_params)
+    @department = Department.new(department_params)
     respond_to do |format|
       if @department.save
         format.json{ render :json =>  { success: true } }
@@ -16,7 +16,8 @@ class DepartmentsController < ApplicationController
     @departments = Department.all
     # @department.quantity
     respond_to do |format|  
-      format.json{ render :json =>  @departments  }
+      format.json{ render :json => { departments: @departments }
+       }
     end
   end
 
@@ -36,11 +37,14 @@ class DepartmentsController < ApplicationController
   end
 
   def destroy
-    
+    Department.find(params[:id]).destroy
+    respond_to do |format|
+      format.json{ render :json => { success: true } }
+    end    
   end
 
   private
     def department_params
-      params.permit(:corperation,:name)
+      params.permit(:corperation_id,:name)
     end
 end

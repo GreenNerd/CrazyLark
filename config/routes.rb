@@ -11,6 +11,6 @@ Rails.application.routes.draw do
   resources :time_sets, only: [:update]
   resources :corperations, only: [:create, :show]
   resources :departments, only: [:create, :show, :destroy, :index]
-  resources :employees, only: [:create, :show, :index, :update]
+  resources :employees, only: [:create, :show, :index, :update, :destroy]
   resources :get_macs, only: [:create]
 end

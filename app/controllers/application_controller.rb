@@ -14,6 +14,9 @@ class ApplicationController < ActionController::Base
   end
   
   # def authenticate_user!
+  #   header
+  #   params
+    
   #   token, options = ActionController::HttpAuthentication::Token.token_and_options(request)
   #   # fetch the token from http request
   #   user.mobile = options.black? nil : options[:mobile]
