@@ -10,9 +10,12 @@ class EmployeesController < ApplicationController
 
   def create
     @employee = Employee.new(employee_param)
-    @employee.save
     respond_to do |format|
-      format.json{ render :json => { success: true } }
+      if @employee.save
+        format.json{ render :json => { success: true } }
+      else
+        format.json{ render :json => { error: -1 } }
+      end
     end
   end
 

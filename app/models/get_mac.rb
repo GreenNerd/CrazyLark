@@ -6,7 +6,7 @@ class GetMac < ActiveRecord::Base
     id_corperation = find_corperation
     ids_employees = find_employee   
     times = TimeSet.find_by(corperation_id: id_corperation[0])
-    create_new_day_record
+    create_first_day_record
 
     for i in 0..ids_employees.length - 1
       if coming < times.start * 60
