@@ -25,10 +25,6 @@ class EmployeesController < ApplicationController
       format.json{ render :json => @employees  }
     end
   end
-  
-  def edit
-    @employee = Employee.find(params[:id])  
-  end
 
   def show
     @employee = Employee.find(params[:id])

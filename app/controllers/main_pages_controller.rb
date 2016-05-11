@@ -1,6 +1,6 @@
 class MainPagesController < ApplicationController
   def show
-    Corperation.find(params[id]).departments.each do |x|
+    Corperation.find(main_params[id]).departments.each do |x|
       x.employees.each do |y|
         y.records.each do |z|
           z.date == Date.today
@@ -40,4 +40,9 @@ class MainPagesController < ApplicationController
                                                       normal: normal_count } }
     end
   end
+
+  private
+    def main_params
+      params.permit(:date,:corperation_id)
+    end
 end

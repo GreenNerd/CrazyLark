@@ -13,4 +13,8 @@ Rails.application.routes.draw do
   resources :departments, only: [:create, :show, :destroy, :index]
   resources :employees, only: [:create, :show, :index, :update, :destroy]
   resources :get_macs, only: [:create]
+  get 'wifimacs/login' => 'wifimacs#new'
+  get 'wifimacs/ping' => 'wifimacs#ping'
+  get 'wifimacs/auth' => 'wifimacs#auth'
+  get 'wifimacs/portal' => 'wifimacs#portal'
 end

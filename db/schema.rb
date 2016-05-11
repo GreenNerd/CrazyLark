@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160425092004) do
+ActiveRecord::Schema.define(version: 20160511070929) do
 
   create_table "calendars", force: :cascade do |t|
     t.date     "day"
@@ -56,9 +56,6 @@ ActiveRecord::Schema.define(version: 20160425092004) do
 
   add_index "employees", ["department_id"], name: "index_employees_on_department_id"
 
-# Could not dump table "get_macs" because of following NoMethodError
-#   undefined method `[]' for nil:NilClass
-
   create_table "key_validates", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -89,6 +86,7 @@ ActiveRecord::Schema.define(version: 20160425092004) do
     t.string   "status"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.string   "pm_status"
   end
 
   add_index "records", ["employee_id"], name: "index_records_on_employee_id"
