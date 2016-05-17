@@ -1,9 +1,0 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-one:
-  mac: MyString
-  1: MyString
-
-two:
-  mac: MyString
-  1: MyString
