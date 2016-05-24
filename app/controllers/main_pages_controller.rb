@@ -6,6 +6,7 @@ class MainPagesController < ApplicationController
       today_statistics(whatday -whatday.wday + i)
       line_chart[i] = [@late_count,@absence_count,@run_count,0] #last 0 is for vacate
     end
+    line_chart = [[10,6,8,2],[6,8,4,2],[6,2,3,1],[0,0,3,1],[12,3,6,7]]
     today_statistics(whatday)
     respond_to do |format|
       format.json{ render :json => { come: @come_count, 
@@ -84,7 +85,7 @@ class MainPagesController < ApplicationController
     if now > times.late * 60
       @absence_count += @total - @total_count
     end
-    @percent = 1 / @total
+    @percent = @total_count / @total
   end
 
   private
