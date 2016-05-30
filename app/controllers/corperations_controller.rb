@@ -1,5 +1,5 @@
 class CorperationsController < ApplicationController
-  before_action :authenticate_user!, only: [:create]
+  # before_action :authenticate_user!, only: [:create]
   def create
     @corperation = Corperation.new(corperation_params)
     respond_to do |format|

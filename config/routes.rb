@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   resources :password_resets, only: [:update]
   resources :time_sets, only: [:update]
   resources :corperations, only: [:create, :show]
-  resources :departments, only: [:create, :show, :destroy, :index]
+  resources :departments, only: [:create, :show, :destroy, :index,:update]
   resources :employees, only: [:create, :show, :index, :update, :destroy]
   resources :get_macs, only: [:create]
   resources :statements, only: [:show]

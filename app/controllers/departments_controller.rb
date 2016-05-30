@@ -1,5 +1,5 @@
 class DepartmentsController < ApplicationController
-  before_action :authenticate_user!, only: [:create]
+  # before_action :authenticate_user!, only: [:create]
   # before_action :correct_user, only: [:create,:destroy]
   def create
     @department = Department.new(department_params)
@@ -8,6 +8,17 @@ class DepartmentsController < ApplicationController
         format.json{ render :json =>  { success: true } }
       else
         format.json{ render :json => { error: -1 } }
+      end
+    end
+  end
+
+  def update
+    department = Department.find(params[:id])
+    respond_to do |format|
+      if department.update(department_params)
+        format.json{ render :json => { success:true } }
+      else
+        format.json{ render :json => { error: -1 } }     
       end
     end
   end
