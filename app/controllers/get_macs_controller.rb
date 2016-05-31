@@ -5,7 +5,7 @@ class GetMacsController < ApplicationController
     coming = Time.now.to_a[2] * 60 + Time.now.to_a[1]
     find_corperation
     find_employee
-    times = TimeSet.find_by(corperation_id: @id_corperation[0])
+    times = TimeSet.find_by(corperation_id: @id_corperation[0])#if there is no setting date 
     create_first_day_record
 
     for i in 0..@ids_employees.length - 1

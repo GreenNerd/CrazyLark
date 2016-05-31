@@ -1,13 +1,20 @@
 class TimeSetsController < ApplicationController
   def update
     respond_to do |format|
-      if time = TimeSet.find_by(timeset_params)
+      if time = TimeSet.find_by(timeset_params[:corperation_id])
         if time.update(timeset_params)
           format.json{ render :json => { success: true } }
         end
       else
           format.json{ render :json => { error: -1 } }
       end      
+    end
+  end
+
+  def show
+    respond_to do |format|
+      @time = TimeSet.find_by(timeset_params[:corperation_id])
+      format.json{ render :json => @time }
     end
   end
 
