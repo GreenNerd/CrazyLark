@@ -2,31 +2,55 @@ class GetMacsController < ApplicationController
   def create
     params.permit!
 
-    coming = Time.now.to_a[2] * 60 + Time.now.to_a[1]
+    @coming = Time.now.to_a[2] * 60 + Time.now.to_a[1]
     find_corperation
     find_employee
-    times = TimeSet.find_by(corperation_id: @id_corperation[0])#if there is no setting date 
+    today = Date.today
     create_first_day_record
+    if @times = Calendar.find_by(day: today, corperation_id: @id_corperation[0])
+      if @times.arrive == nil || @times.leave == nil
+        @times = TimeSet.find_by(corperation_id: @id_corperation[0])
+        clock_clock
+      else
+        sp_clock
+      end
+    else
+      @times = TimeSet.find_by(corperation_id: @id_corperation[0])#if there is no setted date before.
+      clock_clock   
+    end
+  end
 
+  def sp_clock
     for i in 0..@ids_employees.length - 1
-      if coming < times.start * 60
+      if @coming < @times.arrive * 60 - 120
         break
-      elsif coming < times.arrive * 60
+      elsif @coming < @times.arrive * 60
         record_come(@ids_employees[i][0])
-      elsif coming < times.late * 60
+      elsif @coming < @times.leave * 60
+        record_late(ids_employees[i][0])
+      end
+    end
+  end
+
+  def clock_clock
+    for i in 0..@ids_employees.length - 1
+      if @coming < @times.start * 60
+        break
+      elsif @coming < @times.arrive * 60
+        record_come(@ids_employees[i][0])
+      elsif @coming < @times.late * 60
         record_late(@ids_employees[i][0])
 
-      elsif coming < times.run * 60
+      elsif @coming < @times.run * 60
         record_absence(@ids_employees[i][0]) 
-      elsif coming < times.leave * 60
+      elsif @coming < @times.leave * 60
         record_not_absence(@ids_employees[i][0])
-      elsif coming < times.finish * 60
+      elsif @coming < @times.finish * 60
         record_leave(@ids_employees[i][0])
-
       else
         record_overtime(@ids_employees[i][0])
       end
-    end
+    end    
   end
 
   def find_corperation

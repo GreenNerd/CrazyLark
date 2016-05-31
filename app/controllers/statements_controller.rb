@@ -16,15 +16,16 @@ class StatementsController < ApplicationController
       Statement.create(corperation_id: statement_params[:id],year: statement_params[:year],month: statement_params[:month])
       write_record
     else
-      # @table = Statement.find_by(corperation_id: statement_params[:id],year: statement_params[:year],month: statement_params[:month])
-      # if @table.updated_at < 24.hours.ago
+      @table = Statement.find_by(corperation_id: statement_params[:id],year: statement_params[:year],month: statement_params[:month])
+      if @table.updated_at < 24.hours.ago
         write_record  #update statement
-      # end
+      end
     end
   end
 
   def write_record
     @statement = Hash.new
+    working_days
     Corperation.find(statement_params[:id]).departments.ids.each do |x|
       Department.find(x).employees.ids.each do |y|
         @attendance_count = 0
@@ -45,14 +46,35 @@ class StatementsController < ApplicationController
             end
           end
         end
-        #when someone nerver came someday, there won'y be any records in database.
-        #so it's neccessery to add these days into absence counts.
+        @absence_count += @workingdays - @attendance_count - @late_count - @run_count - @absence_count 
         @statement["#{y}"] = [@attendance_count,@late_count,@absence_count,@run_count,Employee.find(y).department.name,name]
       end
     end
     Statement.find_by(year:statement_params[:year].to_i,month:statement_params[:month].to_i,corperation_id:statement_params[:id].to_i).update(status:@statement.to_s)
   end
 
+  def working_days
+    @workingdays = 0
+    weekdays = 0
+    for i in 0..Date.today.day
+      thatday = Date.today - i
+      if thatday.sunday? || thatday.saturday?
+        weekdays += 1
+      end
+
+      if spday = Calendar.find_by(day:thatday, corperation_id:statement_params[:id])
+        if spday.dayoff == true
+          @workingdays -= 1
+        else
+          @workingdays += 1
+        end
+      end
+    end
+    @workingdays = Date.today.day - weekdays + @workingdays
+    if @workingdays < 0
+      @workingdays = 0
+    end
+  end
 
   def statement_params
     params.permit(:id,:year,:month)

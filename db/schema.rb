@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160524065402) do
+ActiveRecord::Schema.define(version: 20160531072939) do
 
   create_table "calendars", force: :cascade do |t|
     t.date     "day"
@@ -20,6 +20,8 @@ ActiveRecord::Schema.define(version: 20160524065402) do
     t.integer  "corperation_id"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.float    "arrive"
+    t.float    "leave"
   end
 
   create_table "cdkeys", force: :cascade do |t|
