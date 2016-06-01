@@ -3,7 +3,9 @@ class StatementsController < ApplicationController
     respond_to do |format|
       generate_statement
       if @forms = Statement.find_by(corperation_id: statement_params[:id],year: statement_params[:year],month: statement_params[:month])
-        format.json{ render :json => eval(@forms.status) }
+        format.json{ render :json => { statement: eval(@forms.status),
+                                                        year:statement_params[:year],
+                                                         month: statement_params[:month]}}
       else        
         format.json{ render :json => { error: "unknown bug"} }
       end
@@ -56,23 +58,43 @@ class StatementsController < ApplicationController
   def working_days
     @workingdays = 0
     weekdays = 0
-    for i in 0..Date.today.day
-      thatday = Date.today - i
-      if thatday.sunday? || thatday.saturday?
-        weekdays += 1
-      end
+    selected_month = Date.new(statement_params[:year].to_i,statement_params[:month].to_i)
+    if selected_month.month == Date.today.month && selected_month.year == Date.today.month
+      for i in 0..Date.today.day - 1
+        thatday = Date.today - i
+        if thatday.sunday? || thatday.saturday?
+          weekdays += 1
+        end
 
-      if spday = Calendar.find_by(day:thatday, corperation_id:statement_params[:id])
-        if spday.dayoff == true
-          @workingdays -= 1
-        else
-          @workingdays += 1
+        if spday = Calendar.find_by(day:thatday, corperation_id:statement_params[:id])
+          if spday.dayoff == true && spday.holiday == false
+            @workingdays -= 1
+          elsif spday.dayoff == false && spday.holiday == true
+            @workingdays += 1
+          end
         end
       end
-    end
-    @workingdays = Date.today.day - weekdays + @workingdays
-    if @workingdays < 0
-      @workingdays = 0
+      @workingdays = Date.today.day - weekdays + @workingdays
+      if @workingdays < 0
+        @workingdays = 0
+      end
+    elsif selected_month < Date.today
+      thatday = selected_month
+      while thatday.month == selected_month.month
+        if thatday.sunday? || thatday.saturday?
+          weekdays += 1
+        end 
+
+        if spday = Calendar.find_by(day:thatday, corperation_id:statement_params[:id])
+          if spday.dayoff == true && spday.holiday == false
+            @workingdays -= 1
+          elsif spday.dayoff == false && spday.holiday == true
+            @workingdays += 1
+          end
+        end    
+        thatday += 1   
+      end
+      @workingdays = (thatday - 1).day - weekdays + @workingdays
     end
   end
 

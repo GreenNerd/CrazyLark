@@ -1,12 +1,11 @@
 class User < ActiveRecord::Base
   before_create :generate_authentication_token
   before_create :password_reset_token
-
   belongs_to :corperation
   
   validates :mobile, presence: true, length: { is: 11 }, numericality: true,
                  uniqueness: true
-  validates :password, presence: true, length: { in: 6..16 }
+  validates :password, presence: true, length: { in: 6..16 },on: :update, allow_blank: true
   validates :key, presence: true, length: { is: 16 }, if: :right_key,
                  uniqueness: true
   has_secure_password
@@ -44,7 +43,6 @@ class User < ActiveRecord::Base
     password_reset_token
     save
   end
-
 
   private
     def right_key

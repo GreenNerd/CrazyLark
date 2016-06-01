@@ -36,7 +36,7 @@ class CalendarsController < ApplicationController
         if calendar.update(dayoff:dayoff,leave:params[:leave],arrive:params[:arrive])
           format.json{ render :json => { success: true} }
         else
-          format.json{ render :json => { error: -1 } }
+          format.json{ render :json => { error: -1 } }   
         end
       else Calendar.create(corperation_id:params[:corperation_id], day:date, dayoff:dayoff, arrive:params[:arrive], leave:params[:leave])
         format.json{ render :json => { success: "finally true" } }

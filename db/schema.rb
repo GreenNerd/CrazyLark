@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160531072939) do
+ActiveRecord::Schema.define(version: 20160601030235) do
 
   create_table "calendars", force: :cascade do |t|
     t.date     "day"
@@ -125,19 +125,7 @@ ActiveRecord::Schema.define(version: 20160531072939) do
 
   add_index "time_sets", ["corperation_id"], name: "index_time_sets_on_corperation_id"
 
-  create_table "users", force: :cascade do |t|
-    t.string   "mobile"
-    t.string   "message"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
-    t.string   "password_digest"
-    t.string   "remember_digest"
-    t.string   "authentication_token"
-    t.string   "reset_digest"
-    t.datetime "reset_sent_at"
-    t.string   "key"
-  end
-
-  add_index "users", ["mobile"], name: "index_users_on_mobile", unique: true
+# Could not dump table "users" because of following NoMethodError
+#   undefined method `[]' for nil:NilClass
 
 end

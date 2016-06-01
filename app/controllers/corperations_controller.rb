@@ -1,9 +1,9 @@
 class CorperationsController < ApplicationController
   # before_action :authenticate_user!, only: [:create]
-  def create
-    @corperation = Corperation.new(corperation_params)
+  def update
+    @corperation = Corperation.find_by(id:params[:corperation_id])
     respond_to do |format|
-      if @corperation.save
+      if @corperation.update(corperation_params)
         @corperation.create_times
         format.json{ render :json => { success: true } }
       else
