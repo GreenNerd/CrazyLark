@@ -2,7 +2,6 @@ class SendMessage < ActiveRecord::Base
   after_create :write_in_random
 
   validates :mobile, presence: true, numericality: true, length: { is:11 }
-  #validates :tag, length: { maximum:3 }
   # write in table
   def write_in_random
     self.seccode = SendMessage.random

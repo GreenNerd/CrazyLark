@@ -1,5 +1,5 @@
 class EmployeesController < ApplicationController
-
+  before_action :authenticate_user!, only: [:index,:show,:update,:destroy]
   def new
     @corperation = Corperaton.find_by(:mac, params[:mac])
     @departments = corperation.departments

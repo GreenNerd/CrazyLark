@@ -1,8 +1,7 @@
 class DepartmentsController < ApplicationController
-  # before_action :authenticate_user!, only: [:create]
-  # before_action :correct_user, only: [:create,:destroy]
+  before_action :authenticate_user!, only: [:create,:update,:show,:index,:destroy]
   def create
-    @department = Department.new(department_params)
+    @department = Department.new(name:department_params[:name],corperation_id: current_user.corperation_id)
     respond_to do |format|
       if @department.save
         format.json{ render :json =>  { success: true } }
@@ -56,6 +55,6 @@ class DepartmentsController < ApplicationController
 
   private
     def department_params
-      params.permit(:corperation_id,:name)
+      params.permit(:name,:id)
     end
 end

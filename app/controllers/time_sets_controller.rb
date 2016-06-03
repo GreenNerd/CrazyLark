@@ -1,4 +1,5 @@
 class TimeSetsController < ApplicationController
+  before_action :authenticate_user!, only: [:update,:show]
   def update
     respond_to do |format|
       if time = TimeSet.find_by(timeset_params[:corperation_id])

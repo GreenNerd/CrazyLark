@@ -9,16 +9,17 @@ Bundler.require(*Rails.groups)
 
 module Crazylark
   class Application < Rails::Application
-  	config.middleware.use Rack::RedisThrottle::Daily, max: 3
-  	
-	config.active_record.raise_in_transactional_callbacks = true
+    config.autoload_paths << Rails.root.join('app/policies')
+    config.middleware.use Rack::RedisThrottle::Daily, max: 3
 
-	config.middleware.insert_before 0, "Rack::Cors" do
-		allow do
-			origins '*'
-			resource '*', :headers => :any, :methods => [:get, :post, :options]
-		end
-	end
+    config.active_record.raise_in_transactional_callbacks = true
+
+    config.middleware.insert_before 0, "Rack::Cors" do
+      allow do
+        origins '*'
+        resource '*', :headers => :any, :methods => [:get, :post, :options]
+      end
+    end
  
   end
 end

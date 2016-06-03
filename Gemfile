@@ -25,6 +25,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
+gem 'pundit'
 
 #rate limite
 gem 'redis-throttle', git: 'git://github.com/andreareginato/redis-throttle.git'

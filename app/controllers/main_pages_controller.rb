@@ -1,4 +1,6 @@
 class MainPagesController < ApplicationController
+  before_action :authenticate_user!, only: [:show]
+  before_action :created_company!, only: [:show]
   def show
     whatday = Date.new(main_params[:year].to_i,main_params[:month].to_i,main_params[:day].to_i)
     line_chart = []
@@ -27,14 +29,14 @@ class MainPagesController < ApplicationController
     @total_count = 0
     @total = 0.0
     now = Time.now.to_a[2] * 60 + Time.now.to_a[1] 
-    times = TimeSet.where(corperation_id:main_params[:corperation_id]).last
+    times = TimeSet.where(corperation_id:current_user.corperation_id).last
     whatday = today_is_what_day
 
-    Corperation.find(main_params[:corperation_id]).departments.ids.each do |x|
+    Corperation.find(current_user.corperation_id).departments.ids.each do |x|
       @total += Department.find(x).employees.count
     end
 
-    Corperation.find(main_params[:corperation_id]).departments.ids.each do |x|
+    Corperation.find(current_user.corperation_id).departments.ids.each do |x|
       Department.find(x).employees.ids.each do |y|
         Record.where(date: whatday,employee_id: y).each do |z|
           if now < times.arrive * 60
@@ -89,6 +91,6 @@ class MainPagesController < ApplicationController
 
   private
     def main_params
-      params.permit(:year,:month,:day,:corperation_id)
+      params.permit(:year,:month,:day)
     end
 end

@@ -1,8 +1,9 @@
 class StatementsController < ApplicationController
+  before_action :authenticate_user!, only: [:show]
   def show
     respond_to do |format|
       generate_statement
-      if @forms = Statement.find_by(corperation_id: statement_params[:id],year: statement_params[:year],month: statement_params[:month])
+      if @forms = Statement.find_by(corperation_id: current_user.corperation_id,year: statement_params[:year],month: statement_params[:month])
         format.json{ render :json => { statement: eval(@forms.status),
                                                         year:statement_params[:year],
                                                          month: statement_params[:month]}}
@@ -14,11 +15,11 @@ class StatementsController < ApplicationController
 
   private
   def generate_statement
-    if Statement.find_by(corperation_id: statement_params[:id],year: statement_params[:year],month: statement_params[:month]).nil?
-      Statement.create(corperation_id: statement_params[:id],year: statement_params[:year],month: statement_params[:month])
+    if Statement.find_by(corperation_id: current_user.corperation_id,year: statement_params[:year],month: statement_params[:month]).nil?
+      Statement.create(corperation_id: current_user.corperation_id,year: statement_params[:year],month: statement_params[:month])
       write_record
     else
-      @table = Statement.find_by(corperation_id: statement_params[:id],year: statement_params[:year],month: statement_params[:month])
+      @table = Statement.find_by(corperation_id: current_user.corperation_id,year: statement_params[:year],month: statement_params[:month])
       if @table.updated_at < 24.hours.ago
         write_record  #update statement
       end
@@ -28,7 +29,7 @@ class StatementsController < ApplicationController
   def write_record
     @statement = Hash.new
     working_days
-    Corperation.find(statement_params[:id]).departments.ids.each do |x|
+    Corperation.find(current_user.corperation_id).departments.ids.each do |x|
       Department.find(x).employees.ids.each do |y|
         @attendance_count = 0
         @late_count = 0
@@ -52,21 +53,21 @@ class StatementsController < ApplicationController
         @statement["#{y}"] = [@attendance_count,@late_count,@absence_count,@run_count,Employee.find(y).department.name,name]
       end
     end
-    Statement.find_by(year:statement_params[:year].to_i,month:statement_params[:month].to_i,corperation_id:statement_params[:id].to_i).update(status:@statement.to_s)
+    Statement.find_by(year:statement_params[:year].to_i,month:statement_params[:month].to_i,corperation_id:current_user.corperation_id).update(status:@statement.to_s)
   end
 
   def working_days
     @workingdays = 0
     weekdays = 0
     selected_month = Date.new(statement_params[:year].to_i,statement_params[:month].to_i)
-    if selected_month.month == Date.today.month && selected_month.year == Date.today.month
+    if selected_month.month == Date.today.month && selected_month.year == Date.today.year
       for i in 0..Date.today.day - 1
         thatday = Date.today - i
+        puts "select 1 tube"
         if thatday.sunday? || thatday.saturday?
           weekdays += 1
         end
-
-        if spday = Calendar.find_by(day:thatday, corperation_id:statement_params[:id])
+        if spday = Calendar.find_by(day:thatday, corperation_id:current_user.corperation_id)
           if spday.dayoff == true && spday.holiday == false
             @workingdays -= 1
           elsif spday.dayoff == false && spday.holiday == true
@@ -81,11 +82,12 @@ class StatementsController < ApplicationController
     elsif selected_month < Date.today
       thatday = selected_month
       while thatday.month == selected_month.month
+        puts "select 2 tube"
         if thatday.sunday? || thatday.saturday?
           weekdays += 1
         end 
 
-        if spday = Calendar.find_by(day:thatday, corperation_id:statement_params[:id])
+        if spday = Calendar.find_by(day:thatday, corperation_id:current_user.corperation_id)
           if spday.dayoff == true && spday.holiday == false
             @workingdays -= 1
           elsif spday.dayoff == false && spday.holiday == true
@@ -99,6 +101,6 @@ class StatementsController < ApplicationController
   end
 
   def statement_params
-    params.permit(:id,:year,:month)
+    params.permit(:year,:month)
   end
 end
