@@ -6,6 +6,7 @@ class CorperationsController < ApplicationController
       respond_to do |format|
         if corper.save
           current_user.update(corperation_id:corper.id)
+          create_times
           format.json{ render :json => { success:true } }
         else
           format.json{ render :json => { error: -1 } }

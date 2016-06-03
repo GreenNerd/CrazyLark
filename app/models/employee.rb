@@ -3,7 +3,6 @@ class Employee < ActiveRecord::Base
   has_many :records , dependent: :destroy
   validates :mobile, presence: true, uniqueness: true
   validates :name, presence: true, length: { maximum: 16 }
-  validates :mac, presence: true, length: { is:17 }
-                          
+  validates :mac, presence: true, length: { is:17 }                    
 end
  
