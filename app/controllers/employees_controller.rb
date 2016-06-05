@@ -29,9 +29,11 @@ class EmployeesController < ApplicationController
   def show
     @employee = Employee.find(params[:id])
     @department_name = Department.find(@employee.department_id).name
+    @employee.employee_record
     respond_to do |format|
   	  format.json{ render :json => { info: @employee,
-                                                        department_name: @department_name } }
+                                                               department_name: @department_name,
+                                                               records: @arr } }
     end
   end
 
