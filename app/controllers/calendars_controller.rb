@@ -10,15 +10,19 @@ class CalendarsController < ApplicationController
       elsif params[:dayoff].to_i == 2
         dayoff = true
       end
-      if @calendar = Calendar.create(corperation_id: current_user.corperation_id,day:date,dayoff:dayoff)
-        if @calendar.day.sunday? || @calendar.day.saturday?
-          @calendar.update(holiday:true)
-        else
-          @calendar.update(holiday:false)
-        end
-        format.json{ render :json => { success: true } }
+      if Calendar.find_by(corperation_id: current_user.corperation_id,day:date)
+        api_error(status: 403)
       else
-        format.json{ render :json => { error: -1 } }
+        if @calendar = Calendar.create(corperation_id: current_user.corperation_id,day:date,dayoff:dayoff)
+          if @calendar.day.sunday? || @calendar.day.saturday?
+            @calendar.update(holiday:true)
+          else
+            @calendar.update(holiday:false)
+          end
+          format.json{ render :json => { success: true } }
+        else
+          format.json{ render :json => { error: -1 } }
+        end
       end
     end
   end

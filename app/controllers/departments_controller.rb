@@ -28,11 +28,11 @@ class DepartmentsController < ApplicationController
       c.departments.each do |d|
         params['name'] = c.name.to_s + d.name.to_s
       end
+    end
     @department = params
     # @department.quantity
     respond_to do |format|  
-      format.json{ render :json => { departments: @departments }
-       }
+      format.json{ render :json => { departments: @departments } }
     end
   end
 
