@@ -40,4 +40,9 @@ class CorperationsController < ApplicationController
       def corperation_params
         params.permit(:name,:mac)
       end
+
+    def create_times
+      time = TimeSet.new(start: 8, arrive: 9,late: 10,run: 4,leave: 5,finish: 6,corperation_id:current_user.corperation_id)
+      time.save
+    end
 end

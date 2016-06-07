@@ -1,10 +1,10 @@
 class DepartmentsController < ApplicationController
-  before_action :authenticate_user!, only: [:create,:update,:show,:index,:destroy]
+  before_action :authenticate_user!, only: [:create,:update,:show,:destroy]
   def create
     @department = Department.new(name:department_params[:name],corperation_id: current_user.corperation_id)
     respond_to do |format|
       if @department.save
-        format.json{ render :json =>  { success: true } }
+        format.json{ render :json =>  { department: @department } }
       else
         format.json{ render :json => { error: -1 } }
       end
@@ -15,7 +15,7 @@ class DepartmentsController < ApplicationController
     department = Department.find(params[:id])
     respond_to do |format|
       if department.update(department_params)
-        format.json{ render :json => { success:true } }
+        format.json{ render :json => { success: true } }
       else
         format.json{ render :json => { error: -1 } }     
       end
@@ -23,7 +23,12 @@ class DepartmentsController < ApplicationController
   end
 
   def index
-    @departments = Department.all
+    params = Hash.new
+    Corperation.all.each do |c|
+      c.departments.each do |d|
+        params['name'] = c.name.to_s + d.name.to_s
+      end
+    @department = params
     # @department.quantity
     respond_to do |format|  
       format.json{ render :json => { departments: @departments }

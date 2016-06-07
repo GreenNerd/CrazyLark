@@ -3,7 +3,7 @@ class WifimacsController < ApplicationController
       if Employee.find_by(mac: params[:mac])
         redirect_to "http://192.168.3.1:80/wfidog/auth?token=123"     
       else
-        redirect_to "http://192.168.3.212:8081/My/20160427/mobileregister.html?login?gw_id=#{params[:gw_id]}&gw_address=#{params[:gw_address]}&gw_port=#{params[:gw_port]}&mac=#{params[:mac]}&url=#{params[:url]}/"   
+        redirect_to "http://192.168.3.212:8081/crazylark/mobileregister.html?login?gw_id=#{params[:gw_id]}&gw_address=#{params[:gw_address]}&gw_port=#{params[:gw_port]}&mac=#{params[:mac]}&url=#{params[:url]}/"   
       end  
   end
 

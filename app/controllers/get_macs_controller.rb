@@ -27,7 +27,7 @@ class GetMacsController < ApplicationController
       elsif @coming < @times.arrive * 60
         record_come(@ids_employees[i][0])
       elsif @coming < @times.leave * 60
-        record_late(ids_employees[i][0])
+        record_late(@ids_employees[i][0])
       end
     end
   end
